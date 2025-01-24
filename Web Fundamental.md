@@ -128,29 +128,32 @@
 * self-closing tags  
 : 닫는 태그가 필요하지 않은 태그
 
+    self-closing tags 예시
     ````html
     <br/> : 줄바꿈
     <input/> : 입력창
     <img/> : 이미지 삽입
     ````
-    img태그 사용 예시
+    <!-- img태그 사용 예시
     ```html
     <img src="url또는 파일 경로" alt="대체텍스트"/>
-    ```
+    ``` -->
 
 * 컨테이너  
 : 요소를 묶어서 레이아웃 구조화
 
     * Block 수준의 컨테이너 요소  
     : 줄바꿈을 통해 행 단위로 스타일 적용 가능  
-    e.g.
+
+        Block element 예시  
         ````html
         <div></div> : 행바꿈
         ````
 
     * Inline 수준의 컨테이너 요소  
     : 줄바꿈 없이 일부 텍스트만 스타일 적용 가능  
-    e.g.
+
+        Inline element 예시 
         ````html
         <span></span>
         ````    
@@ -159,11 +162,19 @@
 
 ### 자주 사용하는 태그
 * h 태그  
-사용 예시
     ````html
-    <h1>제목 태그</h1>
+    <h1></h1>
     ````
-    출력 예시
+    예제
+    ````
+    <h1>제목 태그</h1>
+    <h2>제목 태그</h2>
+    <h3>제목 태그</h3>
+    <h4>제목 태그</h4>
+    <h5>제목 태그</h5>
+    <h6>제목 태그</h6>
+    ````
+    출력
     <h1>제목 태그</h1>
     <h2>제목 태그</h2>
     <h3>제목 태그</h3>
@@ -171,54 +182,203 @@
     <h5>제목 태그</h5>
     <h6>제목 태그</h6>
 
+<br/>
+
 * p 태그  
-사용 예시
     ````html
-    <p>단락태그</p>
+    <p></p>
     ````
-    출력 예시  
-    <p>단락태그</p>
-    
-* a 태그  
-사용 예시
+    예제
     ````html
-    <a href="url" target="어느 탭에서 사용할것인가">텍스트</a>
+    <p>내용1</p>
+    <p>내용2</p>
+    ````
+    출력  
+    <p>내용1</p>
+    <p>내용2</p>
+
+<br/>
+
+* a 태그  
+    ````html
+    <a href="url" target="속성값에 따라 현재 탭/새 탭에서 실행">텍스트</a>
     ````
     * target 속성값  
-    _blank : 새로운 탭에서 이동  
-    _self : 현재 탭에서 이동(default)
+    _blank : 새로운 탭에서 열기  
+    _self : 현재 탭에서 열기(default)
 
-    출력 예시  
+    예제
+    ````html
+    <a href="https://www.naver.com/" target="">현재 탭에서 네이버 열기</a>  
+    <a href="https://www.naver.com/" target="_blank_">새 탭에서 네이버 열기</a>
+    ````
+    출력  
     <a href="https://www.naver.com/" target="">현재 탭에서 네이버 열기</a>  
     <a href="https://www.naver.com/" target="_blank_">새 탭에서 네이버 열기</a>
 
-* 순서가 없는 목록 태그  
-사용 예시
+<br/>
+
+* 목록 태그와 요소  
     ````html
-    <ul>
-    <li>item</li>
-    <li>item</li>
-    </ul>
+    <ul></ul> : Unoldered List
+    <ol></ol> : Oldered List
+    <li></li> : List
     ````
-    출력 예시
+    예제
+    ````html
     <ul>
     <li>item</li>
     <li>item</li>
     </ul>
 
-* 순서가 있는 목록 태그  
-사용 예시
-    ````html
     <ol>
     <li>item</li>
     <li>item</li>
     </ol>
+
     ````
-    출력 예시
+    출력
+    <ul>
+    <li>item</li>
+    <li>item</li>
+    </ul>
+    
     <ol>
     <li>item</li>
     <li>item</li>
     </ol>
+
+<br/>
+
+* table 태그와 요소
+    ````
+    <table></table> : Table 생성
+        * 속성
+        border : 테두리 선 굵기
+
+    <tr></tr> : Table Row
+    <th></th> : Table Header
+    <td></td> : Table Data
+    ````
+    > <span style="color:darkgray">**테이블 생성 : CSS를 이용하는 것보다 간단함  
+    테두리 등 속성 설정 : 주로 CSS 이용**</span>
+
+    예제
+    ````html
+    <table border="1">
+        <tr>
+            <th>속성1</th>
+            <th>속성2</th>
+        </tr>
+        <tr>
+            <td>값1</td>
+            <td>값2</td>
+        </tr>
+    </table>
+    ````
+    출력
+    <table border="1">
+        <tr>
+            <th>속성1</th>
+            <th>속성2</th>
+        </tr>
+        <tr>
+            <td>값1</td>
+            <td>값2</td>
+        </tr>
+    </table>
+
+<br/>
+
+* form 태그와 요소
+    ````html
+    <form></form> : form 생성
+        * 속성
+            method : 서버로 데이터를 전송하기 위한 메소드  
+                GET : 주소 표시줄에 사용자 입력 데이터 노출
+                POST : 주소 표시줄에 사용자 입력 데이터 비노출
+            name : 한 문서 내에 form 태그가 여러개 사용될 수 있음.
+                이를 위해 form 구분을 위한 키(key)로 사용됨.
+            action : 데이터를 전송할 서버와 연결되는 주소(URL, script 파일명 등)
+
+    <label></label> : 요소에 레이블(라벨) 지정
+        * 속성
+        for : 입력 요소의 id값
+
+    <input/> : 한 줄 입력 가능한 입력필드
+        * 속성
+            type : text, url, radio, submit 등
+            name : input 구분을 위한 Key
+            placeholder : 입력값 예시            
+
+    <textarea></textarea> : 여러 줄 입력 가능한 입력필드
+        * 속성
+        name : textarea 구분을 위한 Key
+        placeholder : 입력값 예시
+        clos : 행 크기 제어
+        rows : 열 크기 제어
+    ````
+
+    > <span style="color:darkgray">**form 태그는 다른 언어와 연동하여 사용(js, React SPL)  
+    label 태그가 입력 요소와 연결될 경우 입력 요소 활성화됨**</span>
+
+    예제
+    ````html
+    <form>
+        <label for="inputId">input:</label>
+        <input
+        type="text"
+        id="inputId"
+        name="text1"
+        placeholder="텍스트를 입력해 주세요."
+        />
+        <br/><br/>
+        <label>textarea:</label>
+        <textarea
+            name="content"
+            placeholder="텍스트를 입력해 주세요."
+            cols="20"
+            rows="5"
+        ></textarea>
+    </form>
+    ````
+    출력
+    <form>
+        <label for="inputId">input:</label>
+        <input
+        type="text"
+        id="inputId"
+        name="text1"
+        placeholder="텍스트를 입력해 주세요."
+        />
+        <br/><br/>
+        <label>textarea:</label>
+        <textarea
+            name="content"
+            placeholder="텍스트를 입력해 주세요."
+            cols="20"
+            rows="5"
+        ></textarea>
+    </form>
+
+<br/>
+
+* Semantic 태그  
+: 컨테이너 태그이지만 각 요소의 역할과 의미를 예측 가능하도록 하는 태그  
+SW 완성도와 관련됨  
+검색엔진 최적화(SEO, Search Engine Potimization)를 위해 사용
+
+    ````html
+    <header></header>
+    <nav></nav> : 내비게이션 링크
+    <section></section> : 구역 분할
+    <main></main>
+    <aside></aside>
+    <article></article> : 문서 내 독립적인 콘텐츠
+    <footer></footer>
+    ````
+
+    > <span style="color:darkgray">**semantic을 사용하지 않으면 div 태그로 레이아웃 구현 가능**</span>
 
 <br/>
 
