@@ -11,12 +11,30 @@
 : html 변동이 있을때 Javascript로 변동된 부분에 대한 데이터만 업데이트(랜더링, 새로고침 불필요)    
 사용자 정보 유지됨
 
-* SPA, Single Page Application  
-여러 페이지가 있지만, 연동 등의 기술을 이용하여 하나의 페이지만 존재하는것처럼 동작하는 프레임워크
-    > <span style="color:darkgray">**SPA가 동적 웹을 만들어줌 > js로 html을 구현함**</span>
+* AJAX, Asynchronyze Javascript And XML
+    * 전체 페이지를 새로고침하지 않고도 자주 업데이트해야 하는 웹사이트의 특정 기능이나 섹션에 사용
+    * 서비스 지속성 유지 및 트래픽 감소
+    * XML HTTP Request, Fetch API로 구현함
 
-    > <span style="color:darkgray">**Front End  
-    : SPA를 이용해서 화면단을 개발하는 사람**</span>
+    MVC 단점 : 디바이스에 따라 각각 다르게 개발해야함
+    웹페이지에 변화가 았는 경우 전체 사이트 리로드
+    > ajax로 개선
+
+* SPA, Single Page Application
+    * 필요한 데이터만 비동기로 받아와 현재 화면에 랜더링하여 다수의 페이지를 하나의 페이지인 것처럼 처리하는 프레임워크
+        > <span style="color:darkgray">**SPA가 동적 웹을 만들어줌 > JS로 html을 구현함**</span>
+
+        > <span style="color:darkgray">**Library vs Framework  
+        Library : 사용자가 필요시 import(e.g. jQuery)  
+        framework : 프레임워크 규칙 준수 필요(e.g. Django)**</span>
+
+    * 브라우저와 서버를 분리하여 개발, 브라우저에 렌더링하는 방식을 FE에서 관리함
+    * SEO(Search Engine Optimization)이 어려움
+
+    > <span style="color:darkgray">**검색엔진은 HTML 방식으로 진행됨  
+    SEO는 JS가 랜더링될때까지 기다려야 함  
+    따라서 SEO를 할 떄 SPA프레임워크를 사용한 부분은 포함시키지 않음**</span>
+
 
 <br/>
 
@@ -36,7 +54,7 @@
 
 <br/>
 
-## 웹 프로토콜(Protocol, 통신 규약)
+### 웹 프로토콜(Protocol, 통신 규약)
 * Json : 데이터 전송 시 주로 사용
 * XML : 데이터 저장, 전달, 교환 시 사용
 * HTML : HTTP에 응답하는 방식, 웹 프로토콜
@@ -48,7 +66,7 @@
             * GET : 페이지 정보, 데이터 조회 요청
             * POST : 저장할 정보 전달 > 정보 "생성" 요청, 보안사항이 있는 데이터의 전달
             * PUT, PATCH : 기존에 저장된 정보 수정 요청
-            * DELETE : 저장된 정보 삭제
+            * DELETE : 저장된 정보 삭제  
 
     * https(Hyper Text Transform Protocol Secure)
         * 기기, 운영체제, 브라우저에 상관없이 통신할 수 있는 방식
@@ -58,23 +76,140 @@
         개발자 도구를 통해 http 통신 기록 확인 가능  
         결함 공유 시 오류코드 전달 가능**</span>
 
+    [HTTP 메소드 참고] https://developer.mozilla.org/ko/docs/Web/HTTP/Methods/CONNECT
+
 <br/>
 
 ## Web 통신 구조
-* 클라이언트(FE) : 서버 기능과 무관하게 단독적인 기능들의 집합
+: Client - FE - Web 서버 - BE 서버{ WAS(Web Container) - DB 서버 }
+
+* 클라이언트 : 브라우저
+
+* Frontend : 서버 기능과 무관하게 단독적인 기능들의 집합
     * UI/UX 구성
     * 서버에 요청하기 위한 통신 기능 탑재
 
-* WAS, Web Application Server : 클라이언트와 BE 사이에서 통신을 돕는 서버
+* Web 서버
 
-* Backend : 동작코드, 기능의 동작인 비즈니스 로직을 처리하는 부분
+* Backend 서버 : 동작코드, 기능의 동작인 비즈니스 로직을 처리하는 부분, WAS와 DB를 포함하며 WAS에는 Web Container가 포함되어 있음
+
     * 비즈니스 로직 : 입력된 데이터를 저장하기 위해 가공하는 것
 
-* DB : 데이터의 집합
+* WAS, Web Application Server : 클라이언트와 BE 사이에서 통신을 돕는 서버
+
+* Database 서버 : 데이터베이스 처리를 위한 서버
 
 <br/>
 
-## web 구성
+### Frontend
+* 구성요소
+    * view : UI
+    * controller : 데이터 처리, 로직 실행
+    * State Management : 애플리케이션 데이터의 상태 관리
+    
+* 설계 원칙
+    * 직관성
+    * 일관성
+    * 접근성
+    * 응답성
+
+<br/>
+
+### Backend
+* 구성 요소
+    * 애플리케이션 서버
+    * DB
+    * API
+
+* 개발 언어
+    * python : 연구자료가 많음
+    * Java : 안정적이고 확장 가능
+    * Node.js : 비동기 처리에 강점(Web 개발에 주로 사용됨)
+    * Ruby
+
+* 사용 툴  
+    * ORM : SQL이 아닌 개발 언어로 어플리케이션과 데이터베이스를 연결 가능하도록 해주는 툴  
+        * SQLAlchemy, Django ORM
+
+* Backend 주요 보안 기술
+    * SSL/TLS : 데이터 암호화
+    * 방화벽 : 네트워크 보안
+    * 입력 검증 : SQL Injection 방지
+
+* 성능최적화 방법
+    * 인덱스 설정
+    * 쿼리 최적화
+    * 캐싱
+    * 파티셔닝(데이터 분할 관리)
+
+<br/>
+
+### Data Base
+* 기본 기능
+    * 저장(Insert) : 데이터를 저장하기 위한 규칙을 만듬 > Database Table 생성됨
+    * 검색(Select, find)
+    * 수정(Update)
+    * 삭제(Delete)  
+        * Soft Delete : 실제 데이터는 유지하고 삭제 여부에 True 표시를 함  
+        * Hard Delete : 데이터 자체를 삭제
+
+    > <span style="color:darkgray">**트랜젝션 : 개발에서는 수정, 삭제, 저장을 뜻함(검색은 미포함)  
+    트랜젝션 건다 : 개발에서 롤백을 뜻함**</span>
+
+<br/>
+
+* DB의 구성요소
+    * 테이블 : 데이터를 표 형식으로 구성(Row + Column)
+    * 스키마(Schema) : DB의 구조 정의
+    * 쿼리(Query) : DB에 요청을 하기 위한 명령어, 데이터베이스 정렬 가능
+
+    > <span style="color:darkgray">**데이터 처리 방식  
+    클라이언트에서 서버로 요청 > 서버가 DB로 쿼리를 날림 > DB에서 서버로 데이터 전송 > 서버가 클라이언트로 데이터 전송**</span>
+
+<br/>
+
+### DBMS  
+: 데이터베이스 관리 소프트웨어  
+
+* 종류   
+    * 관계형 데이터베이스  
+    : SQL DB라고도 함
+    스키마를 지정하여 테이블 간의 관계를 기반으로 데이터 관리  
+    Primary key를 활용해 데이터 테이블 연결  
+    일관성 유지에 좋음  
+    보안/금융 데이터 관리에 사용
+        * 데이터 모델링
+        : 관계형 db에서 데이터베이스 구조를 어떻게 연결할 것인지 설계하는 과정
+        데이터 중복 최소화, 명확한 관계 정의, 확장성 확보가 핵심 원칙
+
+        * 정규화
+        : 테이블간 데이터를 분리하여 중복 최소화
+
+        * 비정규화
+        : 성능 향상을 위해 데이터 중복을 허용, 정규화 데이터를 일부 통합
+
+    * 비 관계형 데이터베이스  
+    : NoSQL이라고도 함  
+    정형화되지 않아 확장성이 좋음  
+    AI나 비정형 데이터(가공되지 않은 데이터) 처리에 유리
+        * key-value DB : 속도 빠름  
+        * document DB : json의 확장 버전  
+        * Graph DB : 노드의 속성별로 데이터 저장, 추천광고 등에 사용
+
+<br/>
+
+## Web 데이터 통신 방법  
+: Client - FE - Web 서버 - BE 서버{ WAS(Web Container) - DB 서버 } 
+
+1. 클라이언트의 데이터 요청(정적 + 동적)
+2. Web 서버 : 정적 리소스 처리(애플리케이션 서버에 요청 없이 데이터 처리)
+3. WAS : 웹서버로부터 동적 요청을 전달 받아 Web Container가 동적 리소스 처리
+4. Backend 서버 : 로직 처리
+5. DB 서버 : Backend에서 요청받은 데이터 전달
+
+<br/>
+
+## Web 구성
 * HTML, HyperText Markup Language  
     * 웹페이지의 구조화를 위한 마크업 언어(텍스트를 붙이는 언어)
     * 태그를 이용하여 요소를 표시하고 구성함
@@ -382,7 +517,7 @@ SW 완성도와 관련됨
 
 <br/>
 
-# 선택자(Selector)
+## 선택자(Selector)
 * 전역 속성   
 : 모든 html에서 사용할 수 있는 공통 속성
 
@@ -425,4 +560,248 @@ SW 완성도와 관련됨
     </body>
     ```
 
+<br/>
 
+# SW 아키텍처
+: 시스템의 구성 요소와 각 요소간의 관계/상호작용을 정의하는 구조
+
+## 유형
+* 모놀리식 아키텍처  
+: 모든 기능이 하나의 단일 시스템으로 구성  
+테스트 진행 시 타깃은 하나
+
+* 마이크로서비스 아키텍처  
+: 각 서비스가 독립적인 기능으로 나누어진 구조  
+테스트 진행 시 타깃은 여러개
+
+## 주요 구성 요소
+* Frontend
+    * 사용자 인터페이스 제공
+    * 사용자 입력 처리 및 시각적인 콘텐츠 출력
+    * API 호출을 통해 BE와 데이터 통신
+    
+* API
+    * 외부에서 만들어둔 기능
+    * 네트워크, 통신을 통해 기능 제공
+    * 코드 집합으로 재사용 가능
+
+* Backend
+    * 비즈니스 로직 처리 및 데이터 연산
+    * 인증, 보안 관리
+    * API 응답 생성
+
+* Network
+    * 데이터가 클라이언트와 서버 간에 이동하는 경로 관리    
+    * 데이터 전송 프로토콜 : TCP/IP, UDT, HTTP/HTTPS
+
+* Database
+    * 데이터 저장
+    * 중복 데이터 방지 및 일관성 유지
+    
+    > <span style="color:darkgray">**DB 설계 원칙  
+    1.정규화 : 중복 데이터를 최소화하여 데이터 무결성 확보  
+    2.인덱스 최적화 : 색인 속도를 높이기 위한 인덱스 설정  
+    3.보안 : 암호화 및 접근 권환 관리**</span>
+
+<br/>
+
+### API(Application Programming Interface)
+: SW간 상호작용을 가능하게 하는 인터페이스
+
+* 특징  
+    * 시스템 간 통신 및 데이터 교환 간소화  
+    * 개발 효율 및 재사용성 향상  
+
+#### RESTful API(REST API, Representational State Transfer)
+: 상태 정보 전송의 원칙을 준수하는 API, End Point를 기준으로 통신을 함
+
+> <span style="color:darkgray">**Endpoint : 웹서버의 주소를 가르키는 문자  
+REST API는 HTTP 메소드, End Point 세팅을 통해 테스트 가능**</span>
+
+
+* 특징
+    * HTTP 프로토콜을 기반으로 설계, HTTP 메서드 사용
+    * Stateless : 클라이언트의 요청을 저장하지 않음(무상태성, 상태 저장 X)
+    * Idempotent : 클라이언트가 동일한 요청 시 동일한 응답 전송(멱등성)
+    * Cacheability : 클라이언트가 응답을 캐싱할 수 있음
+
+<br/>
+
+* RESTful API 설계 원칙
+    * 도메인 주소에서 리소스 식별
+        * URI를 통해 요청의 "위치"만 포함되어야 함, 작업의 형태는 http 메서드로 전달  
+        e.g.
+        ````
+        URI : https://qatrack.elice.io/courses/724447/lectures/6460513/lecturepages/52977675
+        courses id : 724447
+        lectures no. : 6460513
+        lecturepages : 52977675
+        ````
+
+    * HTTP 메서드를 기능에 맞게 사용
+        * POST : Create
+        * PUT : Update(전체)
+        * PATCH : Update(부분)
+        * DELETE
+        * GET : Read
+
+    * SON, XML 등 다양한 형태의 포맷 지원
+        * JSON : 경량 데이터 교환 포맷
+        * XML : 데이터 저장 및 전송에 사용, 복잡한 데이터 표현에 적합
+
+    * HATEOAS : 클라이언트가 API를 탐색할 수 있도록 API 응답 시 사용 가능한 기능들의 링크를 함께 제공하는 것
+
+> <span style="color:darkgray">**API vs REST API  
+    API : 통신 규약  
+    RESTful API : 요청과 응답 형식까지 지정한 통신 규약  
+    <br/>
+    .xsd  
+    : .xml 파일의 규칙을 정리한 파일 형식  
+    코드 검증 시 xsd 파일 사용 가능  
+    웹에서 'xml, xsd'로 검색하면 xml을 xsd로 변환하는 사이트가 나온다.**</span>
+
+<br/>
+
+#### API 인증 방식
+* API Key : 단순 문자열로 인증
+* Basic 인증 : 사용자 이름과 비밀번호로 인증
+* JWT(Jwon Web Tocken) : 클라이언트와 서버가 통신할 때 토큰을 통해 인증상태 유지
+* Oauth 2.0 : 액세스 토큰을 통해 인증과 권한 분리
+
+> <span style="color:darkgray">**로그인 상태를 유지하는 것이 중요함  
+따라서 인증/인가 방식을 잘 정하는 것이 중요**</span>
+
+<br/>
+
+#### 세션 인증 방식
+1. 웹 브라우저에서 로그인 성공
+2. 서버에서 세션을 생성한 후 일부를 웹 브라우저, 나머지는 서버의 Memory/HDD/DB에 저장
+3. 웹 브라우저는 전달받는 세션의 일부를 쿠키에 Session ID로 저장
+4. 이후 웹 브라우저가 로그인 상태를 유지한 채로 다른 동작 요청(Request)시, Session ID를 함께 전송
+5. 서버는 Session ID를 비교하여 로그인 상태 확인
+
+메모리에 저장 시 서버 재부팅 시 재 로그인을 해야함
+하드, DB에 저장 시 로딩시간 필요
+
+<br/>
+
+#### 토큰 인증 방식
+1. 웹 브라우저에서 로그인 성공
+2. 서버에서 header, payload, verify signature를 암호화하여 토큰 생성한 후 웹 브라우저로 전송
+3. 웹 브라우저는 토큰을 저장하고, 서버는 토큰 정보가 없는 상태가 됨
+4. 이후 웹 브라우저의 데이터 요청 시, 서버로 토큰 정보 전송
+5. 서버는 서버에 저장되어 있는 비밀키를 사용하여 header, payload 복호화 및 verify signature과 일치하는지 확인
+6. verify signature와 일치하고 유효기간이 남아있으면 서버가 데이터 전송
+
+<br/>
+
+* 헤더 : Type + alg을 담고 있음
+    * Type : JWT(고정값)
+    * alg : verify signature을 만들기 위한 암호화 알고리즘 저장
+
+* 페이로드 : 토큰에서 사용할 정보의 조각들인 클레임(Claim)을 담고 있음
+
+* verify signature : 암호화 알고리즘값을 담고 있음
+
+<br/>
+
+> <span style="color:darkgray">**세션 인증 vs 토큰 인증  
+세션 인증 : stateful, 시간에 따라 바뀌는 상태값 존재  
+토큰 인증 : stateless, 시간에 따라 바뀌는 상태값이 없음**</span>
+
+> <span style="color:darkgray">**Access 토큰 : 만료 시간을 짧게 설정, 매번 인가를 받기 위해 사용  
+Refresh 토큰 : 만료 시간을 길게 설정, 액세스 토큰이 유효한지 확인을 위한 토큰**</span>
+
+<br/>
+
+## SW 아키텍처 패턴
+### 클라이언트-서버
+: 서버가 중앙에서 데이터를 관리, 클라이언트는 요청하는 구조
+
+* 클라이언트  
+    * 서버에 요청을 보내고 응답을 받아 사용자와 상호작용하는 장치 또는 애플리케이션  
+    (서버에 접근하는 모든 장치 또는 애플리케이션)  
+        e.g.  
+        ````
+        게임 구동 프로그램
+        웹 브라우저
+        모바일 클라이언트
+        ````
+    * REST API 또는 GraphQL로 서버와 통신  
+
+    * 클라이언트는 서버에 의존적이며, 처리 능력이 제한됨
+
+    * 웹 클라이언트와 모바일 클라이언트로 구분  
+        * 웹 클라이언트 : HTML, CSS, JavaScript로 구성된 브라우저 기반의 애플리케이션
+        * 모바일 클라이언트 : Android, iOS 기반의 네이티브 앱
+
+    * 기술 스택 : React, Angular, Vue.js
+
+<br/>
+
+* 서버  
+: 웹 서버, 애플리케이션 서버, 데이터베이스 서버로 구성
+    * Web 서버
+        * 정적 리소스 처리
+        * 리버스 프록시(보안)
+        * 로드밸런싱
+        * Apache, NGINX, IIS(windows)로 구현
+
+            > <span style="color:darkgray">**프록시 서버(Proxy Server)  
+            : 포트 스캐닝(port scanning)을 방지하기 위해 현재 활성화된 노드 번호를 숨기고 서버와 클라이언트 사이를 중계  
+            <br/>
+            로드밸런싱(Load Balancing)  
+            : 여러 요청이 있을 때 끊김 없는 서비스 제공(지속성)을 위해 was를 여러개 배치함.  
+            이때 사용 가능한 WAS를 Web Server에 매칭해주는 스위치(트래픽 분배 도구)**</span>
+
+    * WAS(Web Application Server)
+        * 웹 애플리케이션을 실행시켜 필요한 기능을 수행하고 결과를 웹 서버에게 전달하는 일종의 미들웨어
+        * 로직이나 데이터베이스와의 연동을 하기 위한 일련의 처리 업무 담당
+        * nodeJS, django로 구현
+
+    * DB 서버
+        * 데이터를 저장하고 조회
+        * mongoDB, MySQL로 구현
+
+    * Backend 서버
+        * 클라이언트의 요청을 처리하고 데이터 연산 및 DB에 데이터를 저장하는 중앙 컴퓨터 또는 시스템
+        * WAS와 DB를 포함함
+
+    > <span style="color:darkgray">**웹 통신 방법  
+    Client - FE - Web 서버 - BE 서버{ WAS(Web Container) - DB 서버 }**</span>
+
+<br/>
+
+* 클라이언트-서버 모델의 확장성
+    * 수직 확장 : 서버 HW 성능 업그레이드
+    * 수평 확장 : 서버를 추가하여 부하 분산
+
+    
+* 클라이언트-서버 모델의 통신 방식
+    * 동기(Synchronous) : 요청 시 응답이 와야 다음 요청 진행
+    * 비동기(Asynchronous) : 요청 후 응답을 기다리지 않고 다음 작업 수행
+
+* 클라이언트-서버 모델의 데이터 통신 보안
+    * SSL/TLS를 사용한 데이터 암호화
+    * 인증토큰(JWT, OAuth)
+
+* 클라이언트-서버 모델의 데이터 통신 최적화
+    * 데이터 압축(GZIP)으로 네트워크 패킷 감소
+    * CDBN으로 데이터 전송 속도 향상
+    * 캐싱을 통해 반복 요청 최소화
+        * Redis : 데이터 캐싱 및 세션 관리에 최적화 된 고성능 키-값 저장소
+<br/>
+
+## 소프트웨어 아키텍처 계층
+: SW를 구성하는 계층적인 구조
+
+* 프레젠테이션 계층(Presentation Layer)  
+: UI와 관련된 계층 (Vue, React, HTML, API Controller 등)  
+사용자 입력을 받고 비즈니스 로직 계층으로 전달
+
+* 비즈니스 로직 계층(Business Logic Layer)  
+: 애플리케이션의 핵심 로직을 처리  
+데이터 처리 규칙을 정의
+
+* 리포지토리 계층(Repository Layer)  
+: 데이터베이스와의 상호작용을 담당
