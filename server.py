@@ -27,31 +27,32 @@ def templete(contents, content):
     </html>
     '''
 
+def getContents():
+    liTags = ''
+    # 동적으로 url 생성
+    for topic in topics:
+        liTags = liTags + f'<li><a href="/read/{topic["id"]}/">{topic["title"]}</a></li>'
+    return liTags
+
 # 기본 페이지 라우팅
 # return값이 화면에 표시됨
 @app.route('/')
 def index():
-    liTags = ''
-    # 동적으로 url 생성
-    for topic in topics:
-        liTags = liTags + f'<li><a href="/read/{topic["id"]}/">{topic["title"]}</a></li>'
-    return templete(liTags, '<h2>Welcome</h2>Hello, WEB')
+    getContents()
+    return templete(getContents(), '<h2>Welcome</h2>Hello, WEB')
 
 @app.route('/read/<int:id>/')   # 같은 이름(id)의 파라미터로 값 전달
 def read(id):
-    liTags = ''
     title = ''
     body = ''
-    # 동적으로 url 생성
-    for topic in topics:
-        liTags = liTags + f'<li><a href="/read/{topic["id"]}/">{topic["title"]}</a></li>'
+    getContents()
 
     for topic in topics:
         if topic["id"] == id:
             title = topic['title']
             body = topic['body']
             break
-    return templete(liTags, f'<h2>{title}</h2>{body}')
+    return templete(getContents(), f'<h2>{title}</h2>{body}')
 
 # 생성 페이지 라우팅
 @app.route('/create/')
