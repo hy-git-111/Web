@@ -1,10 +1,12 @@
 # flask : html 응답을 동적으로 생성 및 전달하기 위한 프레임워크
 # Routing : 요청을 함수와 연결해주는 기술
 
-from flask import Flask
+from flask import Flask, request, redirect
+
 
 app = Flask(__name__)
 
+nextId = 4
 # 일반적인 Web Framework에서 데이터는 Data Base에 저장함
 topics = [
     {'id': 1, 'title': 'html', 'body': 'html body'},
@@ -23,6 +25,9 @@ def templete(contents, content):
             {contents}
         </ol>
         {content}
+        <ul>
+            <li><a href="/create/">create</a></li>
+        </ul>
         </body>
     </html>
     '''
@@ -55,9 +60,28 @@ def read(id):
     return templete(getContents(), f'<h2>{title}</h2>{body}')
 
 # 생성 페이지 라우팅
-@app.route('/create/')
+@app.route('/create/', methods=['GET', 'POST'])
 def create():
-    return 'Create'
+    # print('request.method', request.method)
+    if request.method == 'GET':  
+        content = '''
+            <form action="/create/" method="POST">
+                <p><input type="text" name="title" placeholder="title"></p> 
+                <p><textarea name="body" placeholder="body"></textarea></p>
+                <p><input type="submit" value="create"></p>
+            </form>
+        '''
+        return templete(getContents(), content)
+
+    elif request.method == 'POST':
+        global nextId
+        title = request.form['title']
+        body = request.form['body']
+        newTopic = {'id': nextId, 'title': title, 'body': body}
+        topics.append(newTopic)
+        url = '/read/'+str(nextId)+'/'
+        nextId += 1
+        return redirect(url)
 
 if __name__ == '__main__':
     app.run(port=5001, debug=True)
