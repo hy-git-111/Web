@@ -14,7 +14,12 @@ topics = [
     {'id': 3, 'title': 'javascript', 'body': 'javascript body'}
 ]
 
-def templete(contents, content):
+def templete(contents, content, id=None):
+    contextUI = ''
+    if id != None:
+        contextUI = f'''
+            <li><a href="/update/{id}/">update</a></li>
+        '''
     return f'''<doctype html>
     <html>
         <head>
@@ -27,6 +32,7 @@ def templete(contents, content):
         {content}
         <ul>
             <li><a href="/create/">create</a></li>
+            {contextUI}
         </ul>
         </body>
     </html>
@@ -57,7 +63,7 @@ def read(id):
             title = topic['title']
             body = topic['body']
             break
-    return templete(getContents(), f'<h2>{title}</h2>{body}')
+    return templete(getContents(), f'<h2>{title}</h2>{body}', id)
 
 # 생성 페이지 라우팅
 @app.route('/create/', methods=['GET', 'POST'])
@@ -81,6 +87,39 @@ def create():
         topics.append(newTopic)
         url = '/read/'+str(nextId)+'/'
         nextId += 1
+        return redirect(url)
+
+# 수정 페이지 라우팅
+# 직전 create 항목 update 가능
+@app.route('/update/<int:id>/', methods=['GET', 'POST'])
+def update(id):
+    if request.method == 'GET':
+        title = ''
+        body = ''
+        for topic in topics:
+            if topic["id"] == id:
+                title = topic['title']
+                body = topic['body']
+                break
+        content = f'''
+            <form action="/update/{id}/" method="POST">
+                <p><input type="text" name="title" placeholder="title" value="{title}"></p> 
+                <p><textarea name="body" placeholder="body">{body}</textarea></p>
+                <p><input type="submit" value="update"></p>
+            </form>
+        '''
+        return templete(getContents(), content)
+
+    elif request.method == 'POST':
+        # global nextId
+        title = request.form['title']
+        body = request.form['body']
+        for topic in topics:
+            if topic['id'] == id:
+                topic['title'] = title
+                topic['body'] = body
+                break
+        url = '/read/'+str(id)+'/'
         return redirect(url)
 
 if __name__ == '__main__':
