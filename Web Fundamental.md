@@ -16,6 +16,10 @@
     * 서비스 지속성 유지 및 트래픽 감소
     * XML HTTP Request, Fetch API로 구현함
 
+* XHR(XMLHttpRequest) 객체
+: 웹 브라우저와 서버가 데이터를 교환할 때 사용됨
+
+
     MVC 단점 : 디바이스에 따라 각각 다르게 개발해야함
     웹페이지에 변화가 았는 경우 전체 사이트 리로드
     > ajax로 개선
@@ -429,12 +433,16 @@
     ````html
     <form></form> : form 생성
         * 속성
-            method : 서버로 데이터를 전송하기 위한 메소드  
-                GET : 주소 표시줄에 사용자 입력 데이터 노출
+            method : 서버로 데이터를 전송하기 위한 메소드, (default : GET)
+                GET : 주소 표시줄에 사용자 입력한 데이터 포함
+                    동적 웹서비스에서 특정한 페이지를 식별하는 고유 주소로 사용
                 POST : 주소 표시줄에 사용자 입력 데이터 비노출
+
             name : 한 문서 내에 form 태그가 여러개 사용될 수 있음.
                 이를 위해 form 구분을 위한 키(key)로 사용됨.
+
             action : 데이터를 전송할 서버와 연결되는 주소(URL, script 파일명 등)
+                form 태그에서 입력받은 값을 전달할 경로는 action 속성에 입력한다. 
 
     <label></label> : 요소에 레이블(라벨) 지정
         * 속성
@@ -443,7 +451,10 @@
     <input/> : 한 줄 입력 가능한 입력필드
         * 속성
             type : text, url, radio, submit 등
+
             name : input 구분을 위한 Key
+                   input 태그에서 입력받은 값을 서버로 받아오면 name 속성에 저장된다.
+
             placeholder : 입력값 예시            
 
     <textarea></textarea> : 여러 줄 입력 가능한 입력필드
