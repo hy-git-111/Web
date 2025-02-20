@@ -19,6 +19,7 @@ def templete(contents, content, id=None):
     if id != None:
         contextUI = f'''
             <li><a href="/update/{id}/">update</a></li>
+            <li><form action="/delete/{id}/" method="POST"><input type="submit" value="delete"/></form></li>
         '''
     return f'''<doctype html>
     <html>
@@ -59,7 +60,7 @@ def read(id):
     getContents()
 
     for topic in topics:
-        if topic["id"] == id:
+        if id == topic['id']:
             title = topic['title']
             body = topic['body']
             break
@@ -74,7 +75,7 @@ def create():
             <form action="/create/" method="POST">
                 <p><input type="text" name="title" placeholder="title"></p> 
                 <p><textarea name="body" placeholder="body"></textarea></p>
-                <p><input type="submit" value="create"></p>
+                <p><input type="submit" value="create"/></p>
             </form>
         '''
         return templete(getContents(), content)
@@ -90,14 +91,14 @@ def create():
         return redirect(url)
 
 # 수정 페이지 라우팅
-# 직전 create 항목 update 가능
+# read 페이지에서 update 가능
 @app.route('/update/<int:id>/', methods=['GET', 'POST'])
 def update(id):
     if request.method == 'GET':
         title = ''
         body = ''
         for topic in topics:
-            if topic["id"] == id:
+            if  id == topic['id']:
                 title = topic['title']
                 body = topic['body']
                 break
@@ -105,7 +106,7 @@ def update(id):
             <form action="/update/{id}/" method="POST">
                 <p><input type="text" name="title" placeholder="title" value="{title}"></p> 
                 <p><textarea name="body" placeholder="body">{body}</textarea></p>
-                <p><input type="submit" value="update"></p>
+                <p><input type="submit" value="update"/></p>
             </form>
         '''
         return templete(getContents(), content)
@@ -115,12 +116,22 @@ def update(id):
         title = request.form['title']
         body = request.form['body']
         for topic in topics:
-            if topic['id'] == id:
+            if id == topic['id']:
                 topic['title'] = title
                 topic['body'] = body
                 break
         url = '/read/'+str(id)+'/'
         return redirect(url)
+
+# 삭제 페이지 라우팅
+# read 페이지에서만 delete 가능
+@app.route('/delete/<int:id>/', methods=['POST'])
+def delete(id):
+    for topic in topics:
+        if id == topic['id']:
+            topics.remove(topic)
+            break
+    return redirect('/')
 
 if __name__ == '__main__':
     app.run(port=5001, debug=True)
