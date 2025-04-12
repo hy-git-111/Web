@@ -19,7 +19,6 @@
 * XHR(XMLHttpRequest) 객체
 : 웹 브라우저와 서버가 데이터를 교환할 때 사용됨
 
-
     MVC 단점 : 디바이스에 따라 각각 다르게 개발해야함
     웹페이지에 변화가 았는 경우 전체 사이트 리로드
     > ajax로 개선
@@ -29,7 +28,7 @@
         > <span style="color:darkgray">**SPA가 동적 웹을 만들어줌 > JS로 html을 구현함**</span>
 
         > <span style="color:darkgray">**Library vs Framework  
-        Library : 사용자가 필요시 import(e.g. jQuery)  
+        Library : 사용자가 필요시 import(e.g. jQuery)
         framework : 프레임워크 규칙 준수 필요(e.g. Django)**</span>
 
     * 브라우저와 서버를 분리하여 개발, 브라우저에 렌더링하는 방식을 FE에서 관리함
@@ -656,9 +655,16 @@ REST API는 HTTP 메소드, End Point 세팅을 통해 테스트 가능**</span>
         * DELETE
         * GET : Read
 
-    * SON, XML 등 다양한 형태의 포맷 지원
-        * JSON : 경량 데이터 교환 포맷
-        * XML : 데이터 저장 및 전송에 사용, 복잡한 데이터 표현에 적합
+    * JSON, XML 등 다양한 형태의 포맷 지원
+        * JSON
+            * 경량 데이터 교환 포맷(csv < json < xml)
+            * 중첩 가능하여 확장이 용이
+            * 검색 및 조회 속도가 빨라 데이터 저장에 많이 사용됨
+        * XML
+            * 데이터 저장 및 전송에 사용
+            * 복잡한 데이터 표현에 적합
+            * 태그로 작성되어 계층적, 확장 용이
+            * 데이터 조회 시, DOM 탐색이 필요함(느림)
 
     * HATEOAS : 클라이언트가 API를 탐색할 수 있도록 API 응답 시 사용 가능한 기능들의 링크를 함께 제공하는 것
 
@@ -691,9 +697,17 @@ REST API는 HTTP 메소드, End Point 세팅을 통해 테스트 가능**</span>
 4. 이후 웹 브라우저가 로그인 상태를 유지한 채로 다른 동작 요청(Request)시, Session ID를 함께 전송
 5. 서버는 Session ID를 비교하여 로그인 상태 확인
 
-메모리에 저장 시 서버 재부팅 시 재 로그인을 해야함
-하드, DB에 저장 시 로딩시간 필요
+> <span style="color:darkgray">**쿠키  
+: 클라이언트에 저장되는 사용자 데이터  
+-세션 쿠키 : 브라우저 종료 시 데이터 삭제(임시 로그인)  
+-영구 쿠키 : 만료기간 설정, 브라우저 종료 후에도 데이터 유지(자동 로그인)  
+<br/>
+세션  
+브라우저에서의 세션 : 세션 스토리지, 브라우저 종료 시 데이터 삭제
+서버에서의 세션 : 서버가 사용자의 상태를 저장하는 임시 공간**</span>
 
+> <span style="color:darkgray">**쿠키가 만료되면,  
+Application > Storage > Cookies에서 세션 쿠키가 사라진다.**</span>
 <br/>
 
 #### 토큰 인증 방식
