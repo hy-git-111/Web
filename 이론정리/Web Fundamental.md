@@ -59,27 +59,65 @@
 
 ### 웹 프로토콜(Protocol, 통신 규약)
 * Json : 데이터 전송 시 주로 사용
-* XML : 데이터 저장, 전달, 교환 시 사용
-* HTML : HTTP에 응답하는 방식, 웹 프로토콜
-* HTTP
+    * 경량 데이터 교환 포맷(csv < json < xml)
+    * 중첩 가능하여 확장이 용이
+    * 검색 및 조회 속도가 빨라 데이터 저장에 많이 사용됨
 
+* XML : 데이터 저장, 전달, 교환 시 사용
+    * 복잡한 데이터 표현에 적합
+    * 태그로 작성되어 계층적, 확장 용이
+    * 데이터 조회 시, DOM 탐색이 필요함(느림)
+
+* HTML : HTTP에 응답하는 방식, 웹 프로토콜
+
+* HTTP : 클라이언트, 서버 간 데이터가 교환되는 방식에 대한 규약
     * http(Hyper Text Transform Protocol)
         * http 1.1 : 1요청 1응답의 원칙을 가진다.
-        * http 메소드(행위)
+        * http 메서드(행위)
             * GET : 페이지 정보, 데이터 조회 요청
             * POST : 저장할 정보 전달 > 정보 "생성" 요청, 보안사항이 있는 데이터의 전달
             * PUT, PATCH : 기존에 저장된 정보 수정 요청
             * DELETE : 저장된 정보 삭제  
 
-    * https(Hyper Text Transform Protocol Secure)
-        * 기기, 운영체제, 브라우저에 상관없이 통신할 수 있는 방식
+* https(Hyper Text Transform Protocol Secure)
+    * 기기, 운영체제, 브라우저에 상관없이 통신할 수 있는 방식
 
         > <span style="color:darkgray">**http를 꼭 알아야 하는 이유!  
-        통신방식을 알면 응답값에 대한 파악 가능(4xx, 5xx..)  
-        개발자 도구를 통해 http 통신 기록 확인 가능  
-        결함 공유 시 오류코드 전달 가능**</span>
+    통신방식을 알면 응답값에 대한 파악 가능(4xx, 5xx..)  
+    개발자 도구를 통해 http 통신 기록 확인 가능  
+    결함 공유 시 오류코드 전달 가능**</span>
 
-    [HTTP 메소드 참고] https://developer.mozilla.org/ko/docs/Web/HTTP/Methods/CONNECT
+    [HTTP 메서드 참고] https://developer.mozilla.org/ko/docs/Web/HTTP/Methods/CONNECT
+
+<br/>
+
+#### htttp 메시지 구조
+* Request Message
+    * Start Line : 요청 작업의 내용으로 구성
+        * HTTP 메서드 / 요청 타겟 / HTTP 버전
+
+    * Header : 요청에 대한 추가 정보 제공
+        * Host, User-Agent, Body에 전달되는 Content 정보 등
+
+    * Blank Line
+
+    * Body : HTTP 메서드 작업을 위해 서버에 전달되는 데이터, 주로 POST나 PUT요청에 사용됨
+
+<br/>
+
+* Response Message
+    * Status Line : 요청 작업의 결과로 구성
+        * HTTP 버전 / 상태코드
+
+            > <span style="color:darkgray">**1xx : Information  
+            2xx : Successful  
+            3xx : Redirection(사용자가 요청한 url이 아닌 다른 url로 우회)  
+            4xx : Clinet Error  
+            5xx : Server Error**</span>
+
+    * Header
+    * Blank Line
+    * Body
 
 <br/>
 
@@ -432,7 +470,7 @@
     ````html
     <form></form> : form 생성
         * 속성
-            method : 서버로 데이터를 전송하기 위한 메소드, (default : GET)
+            method : 서버로 데이터를 전송하기 위한 메서드, (default : GET)
                 GET : 주소 표시줄에 사용자 입력한 데이터 포함
                     동적 웹서비스에서 특정한 페이지를 식별하는 고유 주소로 사용
                 POST : 주소 표시줄에 사용자 입력 데이터 비노출
@@ -620,53 +658,103 @@ SW 완성도와 관련됨
 
 * 특징  
     * 시스템 간 통신 및 데이터 교환 간소화  
-    * 개발 효율 및 재사용성 향상  
+    * 개발 효율 및 재사용성 향상
 
-#### RESTful API(REST API, Representational State Transfer)
-: 상태 정보 전송의 원칙을 준수하는 API, End Point를 기준으로 통신을 함
+* 종류
+    * REST API
+    : url을 통해 통신하는 API
 
-> <span style="color:darkgray">**Endpoint : 웹서버의 주소를 가르키는 문자  
-REST API는 HTTP 메소드, End Point 세팅을 통해 테스트 가능**</span>
+    * SOAP API(Simple Object Access Protocol)  
+        * 마이크로서비스 아키텍처(분산 환경)에서 xml 데이터를 기준으로 통신하는 API 구조
+        * 명확한 계약(WSDL)을 통한 명세 정의
+        * 금융 시스템, ERP등 높은 보안 및 신뢰성을 요구하는 시스템에 사용됨
 
-
-* 특징
-    * HTTP 프로토콜을 기반으로 설계, HTTP 메서드 사용
-    * Stateless : 클라이언트의 요청을 저장하지 않음(무상태성, 상태 저장 X)
-    * Idempotent : 클라이언트가 동일한 요청 시 동일한 응답 전송(멱등성)
-    * Cacheability : 클라이언트가 응답을 캐싱할 수 있음
+    * GraphQL API  
+        * 클라이언트가 GrahpQA 쿼리로 원하는 데이터를 요청하고, 서버는 json 형식의 데이터를 반환하는 API 구조(클라이언트 중심)
+        * 주로 HTTP / HTTPS 프로토콜 사용
+        * 모바일 앱, 실시간 데이터 업데이트 등 데이터 효율이 중요한 시스템에 사용됨
 
 <br/>
 
-* RESTful API 설계 원칙
-    * 도메인 주소에서 리소스 식별
-        * URI를 통해 요청의 "위치"만 포함되어야 함, 작업의 형태는 http 메서드로 전달  
+#### REST API(REpresentational State Transfer API)
+: 대표 상태 전달, 리소스를 URL로 표현하고, HTTP 메서드를 이용해 리소스를 조작하는 방식
+
+* REST : 분산 하이퍼미디어 시스템을 위한 아키텍쳐 스타일(제약조건의 집합)
+
+* REST 핵심 원칙(제약조건) 6가지
+    1. 클라이언트-서버 구조(Client-Server)  
+    : 클라이언트와 서버의 명확한 역할 구분(Client - 사용자 인터페이스, Server - 데이터 로직)
+
+    2. Stateless(무상태성)
+    : 클라이언트의 각 요청을 독립적으로 처리, 이전 요청의 상태(세션)를 서버에 저장하지 않음
+
+    3. Cacheable  
+    : 응답에 캐시 가능 여부를 명시하여 클라이언트나 중간서버에 캐싱할 수 있어야 함
         e.g.
-        ````
-        URI : https://qatrack.elice.io/courses/724447/lectures/6460513/lecturepages/52977675
-        courses id : 724447
-        lectures no. : 6460513
-        lecturepages : 52977675
-        ````
+        ```
+        Cache-Control: max-age=3600 // 3600초(1시간)동안 캐시 가능
+        Cache-Control: no-store // 캐시 불가능
+        ```
 
-    * HTTP 메서드를 기능에 맞게 사용
-        * POST : Create
-        * PUT : Update(전체)
-        * PATCH : Update(부분)
-        * DELETE
-        * GET : Read
+    4. Layered System  
+    : 중간 서버의 구조 계층화로 역할을 명확하게 분리, 클라이언트는 계층의 존재를 모른채 동작 가능해야 함
+    
+    5. Uniform Interface : 효율적인 아키텍처를 위해 일관된 인터페이스를 가지고 있음  
+        * 자원의 식별(Resource Identification) : URI를 통해 자원을 고유하게 식별 가능해야 함
+            * URI를 통해 요청의 "위치"만 포함되어야 함, 작업의 형태는 http 메서드로 전달
+            * URI는 명사 위주로 사용  
+            e.g.
+            ````
+            URI : https://qatrack.elice.io/courses/724447/lectures/6460513/lecturepages/52977675
+            courses id : 724447
+            lectures no. : 6460513
+            lecturepages : 52977675
+            ````
 
-    * JSON, XML 등 다양한 형태의 포맷 지원
-        * JSON
-            * 경량 데이터 교환 포맷(csv < json < xml)
-            * 중첩 가능하여 확장이 용이
-            * 검색 및 조회 속도가 빨라 데이터 저장에 많이 사용됨
-        * XML
-            * 데이터 저장 및 전송에 사용
-            * 복잡한 데이터 표현에 적합
-            * 태그로 작성되어 계층적, 확장 용이
-            * 데이터 조회 시, DOM 탐색이 필요함(느림)
+        * 자원의 표현(Representation) : 자원의 상태를 JSON, XML 등으로 전달
+            e.g.
+            ```
+            // API Response
+            {       
+            "id": 123,
+            "name": "kim",
+            "email": "kim@example.com",
+            "created_at": "2024-06-10T15:30:00Z",
+            "links": {
+                "self": "/users/123",
+                "orders": "/users/123/orders"
+                }
+            }
+            ```
 
-    * HATEOAS : 클라이언트가 API를 탐색할 수 있도록 API 응답 시 사용 가능한 기능들의 링크를 함께 제공하는 것
+        * 메시지의 자기 설명성(Self-descriptive Messages) : 
+            e.g.
+            ```
+            // API Response
+            HTTP/1.1 200 OK
+            Content-Type: application/json  << type이 있어야 데이터 파싱 가능
+            Cache-Control: max-age=600
+            ```
+
+        * HATEOAS : 클라이언트가 API를 탐색할 수 있도록 API 응답 시 사용 가능한 기능들의 링크를 함께 제공, 메세지를 통한 상태 전이가 가능해야 함
+
+    6. Code-On-Demand  
+    : 클라이언트에서 실행할 수 있는 코드를 서버가 전송할 수 있어야 함(js)
+
+* REST API
+: REST 원칙을 기반으로 만들어졌으나, 부분적으로 REST 원칙이 적용된 api
+
+* RESTful API(REST API, Representational State Transfer)
+: 상태 정보 전송의 원칙을 잘 준수하는 API, End Point를 기준으로 통신을 함
+
+> <span style="color:darkgray">**Endpoint : 웹서버의 주소를 가르키는 문자  
+REST API는 HTTP 메서드, End Point 세팅을 통해 테스트 가능**</span>
+
+<!-- * 특징
+    * HTTP 프로토콜을 기반으로 설계, HTTP 메서드 사용
+    * Stateless : 클라이언트의 요청을 저장하지 않음(무상태성, 상태 저장 X)
+    * Idempotent : 클라이언트가 동일한 요청 시 동일한 응답 전송(멱등성)
+    * Cacheability : 클라이언트가 응답을 캐싱할 수 있음 -->
 
 > <span style="color:darkgray">**API vs REST API  
     API : 통신 규약  
@@ -676,6 +764,45 @@ REST API는 HTTP 메소드, End Point 세팅을 통해 테스트 가능**</span>
     : .xml 파일의 규칙을 정리한 파일 형식  
     코드 검증 시 xsd 파일 사용 가능  
     웹에서 'xml, xsd'로 검색하면 xml을 xsd로 변환하는 사이트가 나온다.**</span>
+
+* RESTful API의 구성
+: HTTP Method + Endpoint(어떠한 기능을 만드는지에 대한 정의가 있는 부분)
+
+    * http 메서드
+        * POST : Create
+        * PUT : Update(전체)
+        * PATCH : Update(부분)
+        * DELETE
+        * GET : Read
+
+    * Endpoint
+    : /DataTable의 이름/DataTable의 ID값
+        * ID값은 숫자 외에도 랜덤문자일수도 있음
+
+* RESTfun API에서 사용되는 엔트포인트의 구성 방식
+    * Base Endpoint(기본 엔드포인트, Collection Resource URI)  
+    : 특정 리소스의 전체 목록에 접근할 때 사용
+
+        ```
+        /example
+        ```
+
+    * Path Parameter(경로 매개변수) 사용 엔드포인트
+    : 개별 리소스 접근용 엔드포인트
+
+        ```
+        /products/1
+        -> 1 : DataTable의 ID값(파라미터값)
+        ```
+
+    * Query Parameter(쿼리 매개변수) 사용 엔드포인트
+    : URL의 ? 뒤에 오는 key=value 형태의 파라미터, body값이 아닌 url로 데이터를 제공할때 사용
+    데이터 필터링, 정렬, 페이지네이션 등에 주로 사용됨
+
+        ```
+        /example?sort="created"&order="DESC"
+        해석 : example?생성 날짜 기준 정렬&최신순 정렬
+        ```
 
 <br/>
 
